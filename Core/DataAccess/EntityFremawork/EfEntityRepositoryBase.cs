@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Core.DataAccess
 {
-    public class EfEntityRepositoryBase<TEntity,TContext>:IEntityRepostory<TEntity> 
-        where TEntity :class,IEntity,new ()
-        where TContext:DbContext,new ()
+    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepostory<TEntity>
+        where TEntity : class, IEntity, new()
+        where TContext : DbContext, new()
     {
         public void Add(TEntity entity)
         {
@@ -49,6 +49,7 @@ namespace Core.DataAccess
 
             }
         }
+
         public void Update(TEntity entity)
         {
             using (TContext context = new TContext())

@@ -13,6 +13,7 @@ namespace Core.DataAccess
         void Add(A entity);
         void Update(A entity);
         void Delete(A entity);
+     
       
     }
 }
