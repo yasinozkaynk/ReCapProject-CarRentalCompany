@@ -38,6 +38,22 @@ namespace Business.Concrete
             _userService.Add(user);
             return new SuccessDataResult<User>(user);
         }
+        public IDataResult<User> Update(UserForRegisterDto userForRegisterDto, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var user = new User
+            {
+                Email = userForRegisterDto.Email,
+                FirstName = userForRegisterDto.FirstName,
+                LastName = userForRegisterDto.LastName,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Status = true
+            };
+            _userService.Update(user);
+            return new SuccessDataResult<User>(user);
+        }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
@@ -69,6 +85,15 @@ namespace Business.Concrete
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken);
+        }
+        public IResult ExistsId(int Id)
+        {
+            var user = _userService.GetById(Id);
+            if (user != null)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult("kullanıcı bulunamadı");
         }
     }
 }

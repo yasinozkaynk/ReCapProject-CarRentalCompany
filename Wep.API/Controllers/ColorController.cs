@@ -23,11 +23,11 @@ namespace Wep.API.Controllers
             var result = _colorService.GetAll();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
-        [HttpPost("aded")]
+        [HttpPost("add")]
         public IActionResult Add(Color color)
         {
             var result = _colorService.Add(color);
@@ -37,10 +37,21 @@ namespace Wep.API.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("deleted")]
+        [HttpPost("delete")]
         public IActionResult Delete(Color color)
         {
             var result = _colorService.Delete(color);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+
+        }
+        [HttpPost("update")]
+        public IActionResult Update(Color color)
+        {
+            var result = _colorService.Update(color);
             if (result.Success)
             {
                 return Ok(result);

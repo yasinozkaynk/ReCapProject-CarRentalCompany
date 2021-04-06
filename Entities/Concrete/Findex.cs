@@ -5,12 +5,10 @@ using System.Text;
 
 namespace Entities.Concrete
 {
-    public class CarImage:IEntity
+    public class Findex:IEntity
     {
         public int Id { get; set; }
-        public int CarId { get; set; }
-        public string ImagePath { get; set; }
-        public DateTime Date { get; set; }
-
+        public int UserId { get; set; }
+        public int FindexStore { get; set; }
     }
 }

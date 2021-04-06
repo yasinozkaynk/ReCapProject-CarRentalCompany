@@ -15,7 +15,7 @@ using Entities.DTOs;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -75,15 +75,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.DailyPrice >= min && p.DailyPrice <= max));
         }
 
-        [CacheAspect]
-        public IDataResult<List<Car>> GetByModelYear(string year)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ModeLYear.Contains(year) == true));
-           
-        }
-
-        [CacheRemoveAspect("ICarService.Get")]
-        [PerformanceAspect(10)]
+        //[CacheRemoveAspect("ICarService.Get")]
+      //  [PerformanceAspect(10)]
         [CacheAspect]
         public IResult Update(Car car)
         {
@@ -98,24 +91,25 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.CarId == id));
         }
 
-
-        [CacheAspect]
-        public IDataResult<List<CarDetailDto>> CarDetailDtos()
+        public IDataResult<List<CarDetailDto>> GetByBrand(int brandId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetailDtos());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarBrandDetailDtos(brandId));
+
+        }
+        public IDataResult<List<CarDetailDto>> GetByColor(int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarColorDetailDtos(colorId));
+
+        }
+        public IDataResult<List<CarDetailDto>> GetByCar(int carId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarImage(carId));
+
         }
 
-
-        [CacheAspect]
-        public IResult AddTransactionalTest(Car car)
+        public IDataResult<List<CarDetailDto>> GetCar()
         {
-            Add(car);
-            if (car.DailyPrice<10)
-            {
-                throw new Exception();
-            }
-            Add(car);
-            return null;
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCar());
         }
     }
 }

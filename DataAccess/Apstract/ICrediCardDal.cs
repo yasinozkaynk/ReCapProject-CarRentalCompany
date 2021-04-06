@@ -6,8 +6,7 @@ using System.Text;
 
 namespace DataAccess.Apstract
 {
-    public interface ICarImageDal:IEntityRepostory<CarImage>
+    public interface ICrediCardDal:IEntityRepostory<CrediCard>
     {
-
     }
 }

@@ -23,12 +23,12 @@ namespace Wep.API.Controllers
             var result = _brandService.GetAll();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
 
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
-        [HttpGet("add")]
+        [HttpPost("add")]
         public IActionResult Add(Brand brand)
         {
             var result = _brandService.Add(brand);
@@ -37,9 +37,9 @@ namespace Wep.API.Controllers
                 return Ok(result);
 
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
-        [HttpGet("update")]
+        [HttpPost("update")]
         public IActionResult Update(Brand brand)
         {
             var result = _brandService.Update(brand);
@@ -50,7 +50,7 @@ namespace Wep.API.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("delete")]
+        [HttpPost("delete")]
         public IActionResult Delete(Brand brand)
         {
             var result = _brandService.Delete(brand);

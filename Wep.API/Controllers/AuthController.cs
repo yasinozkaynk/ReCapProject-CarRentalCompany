@@ -32,10 +32,10 @@ namespace Wep.API.Controllers
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpPost("register")]
@@ -46,7 +46,6 @@ namespace Wep.API.Controllers
             {
                 return BadRequest(userExists.Message);
             }
-
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             var result = _authService.CreateAccessToken(registerResult.Data);
             if (result.Success)
@@ -56,5 +55,23 @@ namespace Wep.API.Controllers
 
             return BadRequest(result.Message);
         }
+        [HttpPost("update")]
+        public ActionResult Update(UserForRegisterDto userForRegisterDto)
+        {
+            var userExists = _authService.ExistsId(userForRegisterDto.Id);
+            if (!userExists.Success)
+            {
+                return BadRequest(userExists.Message);
+            }
+            var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+            var result = _authService.CreateAccessToken(registerResult.Data);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
     }
 }

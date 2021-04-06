@@ -23,29 +23,36 @@ namespace Wep.API.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarsImage carImage)
         {
             var result = _carImageService.Add(file, carImage);
             if (result.Success)
             {
                 return Ok(result);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-
             var result = _carImageService.GetAll();
             if (result.Success == true)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             return BadRequest(result);
+        }
 
-
-
+        [HttpGet("getbyimage")]
+        public IActionResult GetImagesByCarId(int carId)
+        {
+            var result = _carImageService.GetImagesByCarId(carId);
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

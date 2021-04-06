@@ -37,6 +37,7 @@ namespace Wep.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -53,7 +54,7 @@ namespace Wep.API
                       IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                    };
               });
-            ServiceTool.Create(services);
+            //ServiceTool.Create(services);
 
             services.AddDependencyResolvers(new ICoreModule[] {
                new CorModule()
@@ -69,6 +70,9 @@ namespace Wep.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.ConfigureCustomExceptionMiddleware();
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
